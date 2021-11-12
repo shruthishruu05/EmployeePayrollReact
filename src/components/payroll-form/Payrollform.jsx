@@ -71,16 +71,16 @@ const Payrollform = (props) => {
             profileUrl: '',
             startDate: ''
         }
-        if (formValue.name.length < 1) {
-            error.name = 'Name is required field'
+        if (!formValue.name.match('^[A-Z]{1}[a-zA-Z]{2,}')) {
+            error.name = 'Name error'
             isError = true;
         }
         if (formValue.gender.length < 1) {
             error.name = 'Gender is required field'
             isError = true;
         }
-        if (formValue.salary.length < 1) {
-            error.name = 'Salary is required field'
+        if ((formValue.salary.valueOf()<400000)||(formValue.salary.valueOf()>500000)) {
+            error.salary = 'Salary should be between 4,00,000 and 5,00,000!!'
             isError = true;
         }
         if (formValue.profileUrl.length < 1) {
@@ -91,6 +91,17 @@ const Payrollform = (props) => {
             error.name = 'Department is required field'
             isError = true;
         }
+
+        var day = formValue.day.valueOf();
+        var month = formValue.month.valueOf();
+        var year = formValue.year.valueOf();
+        var date = new Date(day+" "+month+" "+year);
+        var nowDate = Date.now();
+        if(date>nowDate){
+            error.startDate = "StartDate is a future Date!!"
+            isError = true;
+        }
+
         await setForm({ ...formValue, error: error })
         return isError;
     }
@@ -116,7 +127,7 @@ const Payrollform = (props) => {
         }
 
         employeeService.addEmployee(object).then(data => {
-            console.log("Data added");
+            console.log("data added successfully")
         }).catch(error => {
             console.log("Error while adding");
         })
