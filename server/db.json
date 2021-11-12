@@ -51,6 +51,30 @@
       "notes": "er",
       "id": 5,
       "profileUrl": "../../assets/profile-images/Ellipse 1.png"
-    }  
+    },
+    {
+      "name": "Shruthi",
+      "departmentValues": [
+        "Sales"
+      ],
+      "gender": "Female",
+      "salary": "500000",
+      "startDate": "1 Jan 2021",
+      "notes": "test",
+      "id": 6,
+      "profileUrl": "../../assets/profile-images/Ellipse 1.png"
+    },
+    {
+      "name": "Mahesh",
+      "departmentValues": [
+        "Sales"
+      ],
+      "gender": "Male",
+      "salary": "500000",
+      "startDate": "1 Jan 2021",
+      "notes": "hello",
+      "id": 7,
+      "profileUrl": "../../assets/profile-images/Ellipse -3.png"
+    }
   ]
 }
