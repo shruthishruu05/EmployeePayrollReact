@@ -36,13 +36,14 @@ const Payrollform = (props) => {
             gender: '',
             salary: '',
             profileUrl: '',
-            startDate: ''
+            startDate: '',
+            notes: ''
         }
     }
     const employeeService = new EmployeeService();
 
     const [formValue, setForm] = useState(initialValue);
-    const [displayMessage, setDisplayMessage] = useState("");
+    const [displayMeassage, setDisplayMessage] = useState("");
 
     const changeValue = (event) => {
         setForm({ ...formValue, [event.target.name]: event.target.value });
@@ -70,36 +71,42 @@ const Payrollform = (props) => {
             gender: '',
             salary: '',
             profileUrl: '',
-            startDate: ''
+            startDate: '',
+            notes: ''
         }
-        if (!formValue.name.match('^[A-Z]{1}[a-zA-Z]{2,}')) {
-            error.name = 'Name error'
+        if (formValue.name.length < 1) {
+            error.name = 'Name is required field!'
             isError = true;
         }
         if (formValue.gender.length < 1) {
-            error.name = 'Gender is required field'
+            error.gender = 'Gender is required field!'
             isError = true;
         }
-        if ((formValue.salary.valueOf()<400000)||(formValue.salary.valueOf()>500000)) {
-            error.salary = 'Salary should be between 4,00,000 and 5,00,000!!'
+        if (formValue.salary.length < 1) {
+            error.salary = 'Salary is required field!'
             isError = true;
         }
         if (formValue.profileUrl.length < 1) {
-            error.name = 'Profile is required field'
+            error.profileUrl = 'Profile is required field!'
             isError = true;
         }
         if (formValue.departmentValues.length < 1) {
-            error.name = 'Department is required field'
+            error.department = 'Department is required field!'
+            isError = true;
+        }
+        if (formValue.notes.length < 1) {
+            error.notes = 'Notes is required field!'
             isError = true;
         }
 
         var day = formValue.day.valueOf();
         var month = formValue.month.valueOf();
         var year = formValue.year.valueOf();
-        var date = new Date(day+" "+month+" "+year);
-        var nowDate = Date.now();
-        if(date>nowDate){
-            error.startDate = "StartDate is a future Date!!"
+        var date = new Date(day + " " + month + " " + year);
+        var nowDate = new Date();
+
+        if (date > nowDate) {
+            error.startDate = "Date is a future Date!"
             isError = true;
         }
 
@@ -128,21 +135,18 @@ const Payrollform = (props) => {
         }
 
         employeeService.addEmployee(object).then(data => {
-            setDisplayMessage("Successfully added user");
-            console.log("Successfully added user");
+            console.log("Data added");
+            setDisplayMessage("Successfully Added User");
             setTimeout(() => {
                 setDisplayMessage("");
             }, 5000);
-            })
-
-        .catch(error => {
-            setDisplayMessage("Error while adding the user");
-            console.log("Error while adding the user");
+        }).catch(error => {
+            console.log("Error while adding");
+            setDisplayMessage("Error while Adding User");
             setTimeout(() => {
                 setDisplayMessage("");
             }, 5000);
-           
-        });
+        })
     }
 
     const reset = () => {
@@ -221,7 +225,7 @@ const Payrollform = (props) => {
                     <div className="row-content">
                         <label className="label text" htmlFor="startDate">Start Date</label>
                         <div>
-                            <select onChange={changeValue} id="day" name="Day">
+                            <select value={formValue.day} onChange={changeValue} id="day" name="day">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -254,7 +258,7 @@ const Payrollform = (props) => {
                                 <option value="30">30</option>
                                 <option value="31">31</option>
                             </select>
-                            <select onChange={changeValue} id="month" name="Month">
+                            <select value={formValue.month} onChange={changeValue} id="month" name="month">
                                 <option value="Jan">January</option>
                                 <option value="Feb">February</option>
                                 <option value="Mar">March</option>
@@ -268,7 +272,7 @@ const Payrollform = (props) => {
                                 <option value="Nov">November</option>
                                 <option value="Dec">December</option>
                             </select>
-                            <select onChange={changeValue} id="year" name="Year">
+                            <select onChange={changeValue} id="year" name="year">
                                 <option value="2021">2021</option>
                                 <option value="2020">2020</option>
                                 <option value="2019">2019</option>
@@ -287,14 +291,14 @@ const Payrollform = (props) => {
                         <div className="error">{formValue.error.notes}</div>
                     </div>
                     <div className="buttonParent">
-                        <Link to="" className="resetButton button cancelButton">Cancel</Link>
+                        <Link to="/" className="resetButton button cancelButton">Cancel</Link>
                         <div className="submit-reset">
                             <button type="submit" className="button submitButton" id="submitButton">{formValue.isUpdate ? 'Update' : 'Submit'}</button>
                             <button type="reset" onClick={reset} className="resetButton button">Reset</button>
                         </div>
                     </div>
-                    <div className ="displaymessage">
-                        {displayMessage}
+                    <div className="displaymessage">
+                        {displayMeassage}
                     </div>
                 </form>
             </div>
