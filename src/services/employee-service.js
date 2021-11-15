@@ -11,4 +11,13 @@ export default class EmployeeService {
     getAllEmployees() {
         return AxiosService.getService(`${this.baseUrl}EmployeePayrollDB`);
     }
+    getEmployee(id) {
+        return AxiosService.getService(`${this.baseUrl}EmployeePayrollDB/${id}`);
+    }
+    updateEmployee(data, id) {
+        return AxiosService.putService(`${this.baseUrl}EmployeePayrollDB/${id}`, data);
+    }
+    deleteEmployee(id) {
+        return AxiosService.deleteService(`${this.baseUrl}EmployeePayrollDB/${id}`);
+    }
 }

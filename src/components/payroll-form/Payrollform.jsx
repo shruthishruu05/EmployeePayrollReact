@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import profile1 from '../../assets/profile-images/Ellipse -3.png';
-import profile2 from '../../assets/profile-images/Ellipse 1.png';
+import profile2 from '../../assets/profile-images/Ellipse -1.png';
 import profile3 from '../../assets/profile-images/Ellipse -8.png';
 import profile4 from '../../assets/profile-images/Ellipse -7.png';
 import './payroll-form.scss';
 import logo from '../../assets/images/logo.png';
 import EmployeeService from '../../services/employee-service'
 const Payrollform = (props) => {
+    if (window.location.pathname !== "/update") {
+        localStorage.setItem("employeeData", null);
+    }
+    const employeeData = JSON.parse(localStorage.getItem("employeeData"));
+
     let initialValue = {
         name: '',
         profileArray: [
@@ -42,8 +47,20 @@ const Payrollform = (props) => {
     }
     const employeeService = new EmployeeService();
 
-    const [formValue, setForm] = useState(initialValue);
+    let [formValue, setForm] = useState(initialValue);
+
     const [displayMeassage, setDisplayMessage] = useState("");
+
+
+    if (employeeData) {
+        formValue.name = employeeData.name;
+        formValue.profileUrl = employeeData.profileUrl;
+        formValue.gender = employeeData.gender;
+        formValue.departmentValues = employeeData.departmentValues;
+        formValue.salary = employeeData.salary;
+        formValue.startDate = employeeData.startDate;
+        formValue.salary = employeeData.salary;
+    }
 
     const changeValue = (event) => {
         setForm({ ...formValue, [event.target.name]: event.target.value });
@@ -139,6 +156,7 @@ const Payrollform = (props) => {
             setDisplayMessage("Successfully Added User");
             setTimeout(() => {
                 setDisplayMessage("");
+                window.location.replace("/");
             }, 5000);
         }).catch(error => {
             console.log("Error while adding");
@@ -181,7 +199,7 @@ const Payrollform = (props) => {
                                 <img className="profile" id='image1' src={profile1} alt="profile" />
                             </label>
                             <label>
-                                <input type="radio" checked={formValue.profileUrl === "../../assets/profile-images/Ellipse 1.png"} name="profileUrl" value="../../assets/profile-images/Ellipse 1.png" onChange={changeValue} />
+                                <input type="radio" checked={formValue.profileUrl === "../../assets/profile-images/Ellipse -1.png"} name="profileUrl" value="../../assets/profile-images/Ellipse -1.png" onChange={changeValue} />
                                 <img className="profile" id='image1' src={profile2} alt="profile" />
                             </label>
                             <label>
