@@ -1,9 +1,9 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import './display.scss';
 import EmployeeService from '../../services/employee-service';
 import deleteIcon from '../../assets/icons/delete-black-18dp.svg';
 import editIcon from '../../assets/icons/create-black-18dp.svg';
-import profile from '../../assets/profile-images/Ellipse -3.png';
 
 import profile1 from '../../assets/profile-images/Ellipse -3.png';
 import profile2 from '../../assets/profile-images/Ellipse -1.png';
@@ -91,8 +91,12 @@ const Display = (props) => {
                             <td>{element.salary}</td>
                             <td>{element.startDate}</td>
                             <td>
+
                                 <img onClick={() => remove(element.id)} alt="delete" src={deleteIcon} />
-                                <img onClick={() => update(element.id)} alt="edit" src={editIcon} />
+                                <Link    className="btn btn-info" 
+                                                        to={`/update/${element.id}`} >
+                                    <img alt="edit" src={editIcon} />
+                                </Link>
                             </td>
                         </tr>
                     ))
